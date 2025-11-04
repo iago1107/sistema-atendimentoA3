@@ -1,0 +1,13 @@
+package PadariaSistema;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SistemaAtendimentoApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
