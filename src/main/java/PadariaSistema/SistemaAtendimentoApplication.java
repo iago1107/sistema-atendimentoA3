@@ -1,7 +1,7 @@
 package PadariaSistema;
 
 import PadariaSistema.entity.Cliente;
-import PadariaSistema.entity.ClienteRepository;
+import PadariaSistema.repository.ClienteRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
