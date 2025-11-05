@@ -1,8 +1,16 @@
-package PadariaSistema.entity;
+package SistemaDePedidosApplication.Entity;
 
 import jakarta.persistence.*; // JPA para mapear tabela
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
+
+/*
+
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity // indica que a classe é uma tabela no banco
 @Table(name = "ClientePadaria") // nome da tabela
 
@@ -20,9 +28,6 @@ public class Cliente {
      private String senha;
      private String telefone;
      private LocalDate dataNascimento;
-
-     // ---------- CONSTRUTOR ----------
-     public Cliente() {}
 
      public Cliente(String nome, String sobrenome, String cpf, String email, String senha, String telefone, LocalDate dataNascimento) {
           this.nome = nome;
