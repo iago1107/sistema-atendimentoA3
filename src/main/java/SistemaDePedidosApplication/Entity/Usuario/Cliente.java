@@ -1,5 +1,6 @@
-package SistemaDePedidosApplication.Entity;
+package SistemaDePedidosApplication.Entity.Usuario;
 
+import SistemaDePedidosApplication.Entity.Endereco;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Cliente {
 
     @Id
@@ -46,4 +48,7 @@ public class Cliente {
     private String telefone;
 
     private LocalDate dataNascimento;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Endereco endereco;
 }

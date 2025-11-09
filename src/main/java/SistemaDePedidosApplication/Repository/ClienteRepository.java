@@ -1,7 +1,7 @@
 package SistemaDePedidosApplication.Repository;
 
 
-import SistemaDePedidosApplication.Entity.Cliente;
+import SistemaDePedidosApplication.Entity.Usuario.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

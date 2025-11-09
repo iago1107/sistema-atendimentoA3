@@ -3,7 +3,7 @@ package SistemaDePedidosApplication.Controller;
 
 import SistemaDePedidosApplication.DTO.ClienteLoginDTO;
 import SistemaDePedidosApplication.DTO.ClienteRegisterDTO;
-import SistemaDePedidosApplication.Entity.Cliente;
+import SistemaDePedidosApplication.Entity.Usuario.Cliente;
 import SistemaDePedidosApplication.Service.ClienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

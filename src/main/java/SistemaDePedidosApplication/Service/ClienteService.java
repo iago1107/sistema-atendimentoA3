@@ -3,7 +3,7 @@ package SistemaDePedidosApplication.Service;
 
 import SistemaDePedidosApplication.DTO.ClienteLoginDTO;
 import SistemaDePedidosApplication.DTO.ClienteRegisterDTO;
-import SistemaDePedidosApplication.Entity.Cliente;
+import SistemaDePedidosApplication.Entity.Usuario.Cliente;
 import SistemaDePedidosApplication.Repository.ClienteRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
