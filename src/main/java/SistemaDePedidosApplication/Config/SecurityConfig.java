@@ -1,15 +1,18 @@
-package SistemaDePedidosApplication.Config; // O pacote correto
+package SistemaDePedidosApplication.Config;
 
-// Imports do PasswordEncoder
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-// Imports do HttpSecurity (que já estavam lá)
+import org.springframework.http.HttpMethod; // Importe o HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -23,25 +26,39 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        // 1. Libera o acesso aos endpoints do Swagger/OpenAPI
-                        .requestMatchers(
-                                "/docs",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/login" //  <--- ADICIONE ESTA LINHA
-                        ).permitAll() // Permite acesso público a estes padrões
 
-                        // 2. Exige autenticação para todo o resto
-                        .anyRequest().authenticated()
-                )
-                // 3. Configura o formulário de login
-                .formLogin(form -> form
-                        .loginPage("/login") // Aponta para a página de login
-                        .permitAll() // Permite que a lógica do formulário seja processada
+                                // MUDANÇA PRINCIPAL:
+                                // Permite TODAS as requisições (/**)
+                                // Isso libera /api/clientes/register, /api/produtos, etc.
+                                .requestMatchers("/**").permitAll()
+
+                        // A linha abaixo foi removida temporariamente
+                        // .anyRequest().authenticated()
                 );
+        // O .formLogin() não é mais necessário, pois tudo está público
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Permite qualquer origem
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+
+        // Permite todos os métodos
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Permite todos os cabeçalhos
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }
