@@ -1,0 +1,40 @@
+# Arquivo: docker-compose.yml
+
+version: '3.8'
+
+services:
+
+  # Serviço 1: O Banco de Dados MariaDB
+  padaria-db:
+    image: mariadb:latest
+    container_name: padaria-db
+    environment:
+      MARIADB_DATABASE: sistema_atendimento
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+    networks:
+      - padaria-net
+    healthcheck:
+
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  padaria-api:
+
+    image: ghcr.io/iago1107/padaria-api:latest
+    container_name: padaria-api
+    ports:
+
+      - "8081:8081"
+    networks:
+      - padaria-net
+    depends_on:
+
+      padaria-db:
+        condition: service_healthy
+
+networks:
+  padaria-net:
+    driver: bridge
