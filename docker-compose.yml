@@ -1,10 +1,11 @@
 # Arquivo: docker-compose.yml
+# VERSÃO CORRIGIDA
 
 version: '3.8'
 
 services:
 
-  # Serviço 1: O Banco de Dados MariaDB
+  # Serviço 1: O Banco de Dados MariaDB (Está perfeito)
   padaria-db:
     image: mariadb:latest
     container_name: padaria-db
@@ -14,24 +15,23 @@ services:
     networks:
       - padaria-net
     healthcheck:
-
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-
+  # Serviço 2: Sua API Spring Boot (CORRIGIDO)
   padaria-api:
-
-    image: ghcr.io/iago1107/padaria-api:latest
+    # MUDANÇA AQUI: Trocamos "image:" por "build:"
+    # Isso força o compose a construir a imagem localmente
+    # usando seu Containerfile e o application.properties ATUALIZADO.
+    build: .
     container_name: padaria-api
     ports:
-
       - "8081:8081"
     networks:
       - padaria-net
     depends_on:
-
       padaria-db:
         condition: service_healthy
 
