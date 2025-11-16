@@ -1,6 +1,6 @@
 # 🍞 Sistema de Pedidos para Padaria (API Back-end)
 
-Este repositório contém o código-fonte da API REST para um Sistema de Gerenciamento de Pedidos de uma padaria. O projeto é construído com **Java 17** e **Spring Boot**.
+Este repositório contém o código-fonte da API REST para um Sistema de Gerenciamento de Pedidos de uma padaria. O projeto é construído com **Java 21** e **Spring Boot 3.x**.
 
 O sistema permite que clientes se cadastrem, façam pedidos online, e que a equipe interna (Atendentes e Administradores) gerencie o cardápio, o estoque e o fluxo de processamento dos pedidos.
 
@@ -14,9 +14,9 @@ Este projeto foi modelado para cobrir os seguintes casos de uso:
 
 ### 👤 Cliente
 * **Fazer Cadastro:** Criar uma nova conta de cliente.
-* **Fazer Login:** Autenticar-se no sistema (com senha criptografada).
+* **Fazer Login:** Autenticar-se no sistema.
 * **Gerenciar Endereço:** Adicionar ou atualizar seu endereço de entrega.
-* **Fazer Pedido:** Montar um carrinho e submeter um novo pedido.
+* **Fazer Pedido:** Montar um carrinho (com verificação de estoque) e submeter um novo pedido, escolhendo a forma de pagamento.
 * **Acompanhar Pedido:** Ver o status atual de seus pedidos.
 
 ### 🧑‍🍳 Atendente
@@ -26,21 +26,23 @@ Este projeto foi modelado para cobrir os seguintes casos de uso:
 
 ### 🛠️ Administrador
 * **Fazer Login (Admin):** Acessar o sistema com credenciais de administrador.
+* **Gerenciar Contas de Funcionários:** Cadastrar novos atendentes ou administradores.
 * **Gerenciar Cardápio (Produtos):** Criar, editar e desativar produtos do cardápio.
-* **Gerenciar Estoque:** Atualizar a `quantidadeEstoque` dos produtos.
+* **Gerenciar Estoque:** Atualizar a `quantidade_estoque` dos produtos.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Java 17**
+* **Java 21**
 * **Spring Boot 3.x**
-* **Spring Data JPA:** Para persistência de dados e comunicação com o banco.
-* **Spring Security:** Para autenticação (login) e autorização (permissões).
-* **MariaDB (ou MySQL):** Como banco de dados relacional.
+* **Spring Data JPA:** Para persistência de dados.
+* **Spring Security:** Para autenticação e autorização (atualmente em modo de teste).
+* **MariaDB:** Como banco de dados relacional.
 * **Maven:** Para gerenciamento de dependências.
-* **Lombok:** Para reduzir código boilerplate (Getters, Setters, Construtores).
+* **Lombok:** Para reduzir código boilerplate.
 * **Swagger (OpenAPI 3):** Para documentação e teste interativo da API.
+* **Podman (e Podman Compose):** Para conteinirização e orquestração da aplicação e do banco de dados.
 
 ---
 
@@ -48,112 +50,79 @@ Este projeto foi modelado para cobrir os seguintes casos de uso:
 
 O banco de dados foi modelado com as seguintes entidades JPA:
 
-* **`Cliente`**: Armazena os dados pessoais do cliente, incluindo seu e-mail e senha (`@OneToOne` com `Endereco`).
-* **`Endereco`**: Armazena os dados de endereço de entrega, ligado a um `Cliente`.
-* **`Funcionario`**: Classe base abstrata que usa herança (`@Inheritance(strategy = InheritanceType.SINGLE_TABLE)`) para definir:
+* **`Cliente`**: Armazena os dados pessoais do cliente (`@OneToOne` com `Endereco`).
+* **`Endereco`**: Armazena o endereço de entrega, ligado a um `Cliente`.
+* **`Funcionario`**: Classe base abstrata (`@Inheritance(strategy = InheritanceType.SINGLE_TABLE)`) para:
     * **`Atendente`**
     * **`Administrador`**
-* **`Produto`**: Define um item do cardápio, incluindo `preco`, `CategoriaProduto` (Enum) e `quantidadeEstoque`.
-* **`Pedido`**: A entidade central, ligada ao `Cliente` e ao `EnderecoEntrega`, contendo um `StatusPedido` (Enum) e o `valorTotal`.
-* **`ItemPedido`**: A "linha" do pedido, ligando um `Pedido` a um `Produto` e armazenando a `quantidade` e o `precoUnitario` (para histórico).
+* **`Produto`**: Define um item do cardápio, incluindo `preco`, `CategoriaProduto` (Enum) e `quantidade_estoque`.
+* **`Pedido`**: A entidade central, ligada ao `Cliente` e `EnderecoEntrega`, contendo `StatusPedido` (Enum), `FormaDePagamento` (Enum) e `valorTotal`.
+* **`ItemPedido`**: A "linha" do pedido, ligando um `Pedido` a um `Produto` e armazenando `quantidade` e `precoUnitario`.
 
 ---
 
-## 📚 Documentação da API (Swagger)
+## 🏁 Como Rodar o Projeto (Recomendado: Podman Compose)
 
-A documentação interativa de todos os endpoints da API está disponível via Swagger UI.
+Este guia explica como configurar seu computador Windows do zero para rodar a API e o Banco de Dados juntos usando `podman-compose`.
 
-1.  Rode a aplicação localmente.
-2.  Acesse o seguinte link no seu navegador:
-    [**http://localhost:8080/docs**](http://localhost:8080/docs)
+### 1. Requisitos de Instalação (Fazer só uma vez)
 
-### Principais Controllers Disponíveis:
+Você precisa instalar 5 programas e configurar 1 regra de firewall.
 
-* **`ClienteController`**
-    * `POST /api/clientes/register`: Cria um novo cliente.
-    * `POST /api/clientes/login`: (Endpoint para login personalizado).
-* **`EnderecoController`**
-    * `POST /api/clientes/{clienteId}/endereco`: Adiciona/atualiza o endereço de um cliente.
-    * `GET /api/clientes/{clienteId}/endereco`: Busca o endereço de um cliente.
-* **`ProdutoController`**
-    * `GET /api/produtos`: Lista todos os produtos ativos (cardápio).
-    * `POST /api/produtos`: Cria um novo produto (Requer ADM).
-    * `PUT /api/produtos/{id}`: Atualiza um produto (Requer ADM).
-    * `DELETE /api/produtos/{id}`: Desativa um produto (Requer ADM).
-* **`PedidoController`**
-    * `POST /api/pedidos`: Cria um novo pedido (Implementa verificação de estoque).
-    * `GET /api/pedidos/cliente/{clienteId}`: Lista todos os pedidos de um cliente.
-    * `GET /api/pedidos/fila`: Busca pedidos por status (Ex: `PENDENTE`).
-    * `PUT /api/pedidos/{pedidoId}/status`: Atualiza o status de um pedido.
+#### A. Ativar Recursos de Virtualização do Windows (WSL)
+1.  Pressione a tecla **Windows**, digite `Ativar ou desativar recursos do Windows` e abra.
+2.  Na lista, **MARQUE** estas duas caixas:
+    * `Plataforma de Máquina Virtual`
+    * `Subsistema do Windows para Linux`
+3.  Clique em **OK** e **REINICIE O COMPUTADOR**.
 
----
-
-## 🔒 Configuração de Segurança
-
-A segurança é gerenciada pelo **Spring Security**.
-
-1.  **Criptografia:** Senhas de clientes e funcionários são automaticamente criptografadas usando `BCryptPasswordEncoder` no momento do cadastro.
-2.  **CORS:** O sistema está configurado para aceitar requisições de diferentes origens (`*`), permitindo que o Swagger e futuras aplicações front-end funcionem sem erros de `Failed to fetch`.
-3.  **Autorização (Modo de Teste):** Atualmente, para facilitar o desenvolvimento e os testes via Swagger, a segurança está configurada para permitir todas as requisições:
-    ```java
-    .authorizeHttpRequests(authorize -> authorize
-        .requestMatchers("/**").permitAll()
-    )
+#### B. Instalar o WSL (O "Motor" do Linux)
+1.  Abra o **PowerShell como Administrador** (Menu Iniciar > digite `PowerShell` > clique com o botão direito > "Executar como administrador").
+2.  Execute o comando:
+    ```powershell
+    wsl --install
     ```
-    *O próximo passo deste projeto é reimplementar a segurança baseada em papéis (Roles) para proteger os endpoints de ADM e Atendente.*
+3.  **REINICIE O COMPUTADOR** novamente.
+
+#### C. Instalar o Git
+O Podman precisa do `ssh-keygen` (que vem com o Git) para criar a máquina virtual.
+1.  Baixe e instale o **Git for Windows**: [https://git-scm.com/download/win](https://git-scm.com/download/win)
+2.  Pode aceitar todas as opções padrão durante a instalação.
+
+#### D. Instalar o Podman Desktop
+1.  Baixe e instale o **Podman Desktop**: [https://podman-desktop.io/](https://podman-desktop.io/)
+2.  Após instalar, abra o Podman Desktop e deixe-o iniciar. Ele deve detectar o WSL automaticamente (o ícone no canto inferior esquerdo deve ficar verde).
+
+#### E. Instalar Python e `podman-compose`
+1.  Baixe e instale o **Python**: [https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
+2.  **IMPORTANTE:** Na primeira tela do instalador, **MARQUE A CAIXINHA** que diz **`Add Python.exe to PATH`**.
+3.  Após instalar, **feche e abra um novo terminal** (CMD ou PowerShell).
+4.  Instale o `podman-compose` usando o `pip`:
+    ```cmd
+    pip install podman-compose
+    ```
+
+#### F. Configurar o Firewall do Windows
+O container da API precisa de permissão para falar com o container do Banco de Dados na porta 3306.
+1.  Abra o **"Firewall do Windows com Segurança Avançada"** (pelo Menu Iniciar).
+2.  Clique em **"Regras de Entrada"** (esquerda) > **"Nova Regra..."** (direita).
+3.  **Tipo de Regra:** Selecione **Porta** > Avançar.
+4.  **Protocolo e Portas:** Selecione **TCP**. Em **Portas locais específicas:**, digite `3306` > Avançar.
+5.  **Ação:** Selecione **Permitir a conexão** > Avançar.
+6.  **Perfil:** Deixe as três caixas marcadas > Avançar.
+7.  **Nome:** Dê um nome (ex: `Liberar MariaDB (Podman)`) > Concluir.
+
+**Setup Concluído!**
 
 ---
 
-## 🏁 Como Executar Localmente
+### 2. Passo a Passo para Executar o Projeto
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone [URL-DO-SEU-REPOSITORIO]
-    ```
-2.  **Configure o Banco de Dados:**
-    * Abra o arquivo `src/main/resources/application.properties`.
-    * Configure as propriedades `spring.datasource.url`, `spring.datasource.username` e `spring.datasource.password` com os dados do seu banco MariaDB/MySQL.
-    * Certifique-se que o Spring está configurado para rodar os scripts (`spring.jpa.hibernate.ddl-auto` deve ser `create`, `create-drop` ou `update` para o `data.sql` rodar).
-3.  **Execute a Aplicação:**
-    * Rode a aplicação através da sua IDE (IntelliJ/VSCode) ou via Maven:
-    ```bash
-    mvn spring-boot:run
-    ```
-4.  **Teste:**
-    * Acesse o Swagger em `http://localhost:8080/docs` para testar os endpoints.
+Agora, toda vez que você quiser rodar o projeto, o processo é este:
 
----
+**1. Abra o Terminal (Admin):**
+Abra o **PowerShell (ou CMD) como Administrador**.
 
-## 📜 Scripts de Carga (SQL)
-
-Para auxiliar nos testes, você pode criar um arquivo chamado `data.sql` na pasta `src/main/resources/`. O Spring Boot o executará na inicialização e populará o banco com os dados abaixo.
-
-**Senhas dos Funcionários (já criptografadas):**
-* **ADM (Carla):** `senhaAdm`
-* **Atendente (Bruno):** `senhaAten`
-
-```sql
-/* data.sql - Coloque este arquivo em src/main/resources/ */
-
--- 1. ADICIONA OS FUNCIONÁRIOS
--- Senha para 'senhaAdm' (criptografada)
-INSERT INTO Funcionario (tipo_funcionario, nome, email, senha) 
-VALUES ('ADMINISTRADOR', 'Carla Administradora', 'carla.adm@padaria.com', '$2a$10$f/A.e.3.i9i/9qI9s0.pX.eT.U.s2.h/u.s.9eT.W.G');
-
--- Senha para 'senhaAten' (criptografada)
-INSERT INTO Funcionario (tipo_funcionario, nome, email, senha) 
-VALUES ('ATENDENTE', 'Bruno Atendente', 'bruno.atendente@padaria.com', '$2a$10$s/H.m/C.y.e/j.E.t.e/q.u/a.s.e/r.s/u.k/e.y');
-
-
--- 2. ADICIONA OS PRODUTOS (CARDÁPIO)
-INSERT INTO Produto (nome, descricao, preco, categoria, quantidade_estoque, ativo) 
-VALUES ('Pão Francês', 'Unidade de pão francês fresco', 0.50, 'PADARIA', 200, TRUE);
-
-INSERT INTO Produto (nome, descricao, preco, categoria, quantidade_estoque, ativo) 
-VALUES ('Bolo de Chocolate', 'Fatia de bolo de chocolate com cobertura', 25.00, 'CONFEITARIA', 10, TRUE);
-
-INSERT INTO Produto (nome, descricao, preco, categoria, quantidade_estoque, ativo) 
-VALUES ('Coca-Cola 2L', 'Refrigerante Coca-Cola 2L', 10.00, 'BEBIDAS', 0, TRUE); -- SEM ESTOQUE
-
-INSERT INTO Produto (nome, descricao, preco, categoria, quantidade_estoque, ativo) 
-VALUES ('Queijo Minas', 'Peça de Queijo Minas Frescal', 15.00, 'FRIOS', 50, TRUE);
+**2. Ligue o "Motor" do Podman:**
+```bash
+podman machine start
