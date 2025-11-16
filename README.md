@@ -1,10 +1,25 @@
 # 🍞 Sistema de Pedidos para Padaria (API Back-end)
 
-Este repositório contém o código-fonte da API REST para um Sistema de Gerenciamento de Pedidos de uma padaria. O projeto é construído com **Java 21** e **Spring Boot 3.x**.
+Este projeto é um sistema de API REST para o gerenciamento de pedidos de uma padaria, construído com **Java 21** e **Spring Boot 3.x**.
 
-O sistema permite que clientes se cadastrem, façam pedidos online, e que a equipe interna (Atendentes e Administradores) gerencie o cardápio, o estoque e o fluxo de processamento dos pedidos.
+> 🚧 **Status do Projeto:** Concluído (Fase 1 - API Funcional) 🚧
 
-> 🚧 **Status do Projeto:** Em Desenvolvimento 🚧
+## 🎓 Contexto Acadêmico
+
+Este projeto foi desenvolvido como atividade para o curso de **Programação de Soluções Computacionais e Modelagem de Software** da **Faculdade da Saúde e Ecologia Humana (FASEH)**, localizada em Vespasiano/MG.
+
+---
+
+## 🎯 O Problema a Ser Resolvido
+
+O projeto nasceu de uma entrevista (ver `Documento de Entrevista Padaria(Cidade).pdf`) que identificou os principais desafios do atendimento atual da padaria:
+
+* [cite_start]**Dependência de Atendimento Manual:** Atualmente, "Os clientes fazem pedidos pessoalmente na lanchonete ou por telefone"[cite: 43].
+* [cite_start]**Atendimento Lento (Indecisão):** Um sistema digital foi sugerido pois "o cliente poderia escolher os produtos sem pressa e sem 'agarrar' no atendimento, já que sempre há clientes que ficam indecisos"[cite: 43].
+* [cite_start]**Falta de Marketing:** Os clientes "só descobrem as novidades e promoções indo ao estabelecimento", pois a padaria não utiliza placas ou redes sociais[cite: 43].
+* [cite_start]**Comunicação Interna Ineficiente:** A comunicação entre o balcão de atendimento e a produção é um desafio: "A padaria fica no Pátio e a produção no 4º Andar; a comunicação é feita pelo telefone"[cite: 53].
+
+A **solução** proposta é esta API, que serve como base para um futuro aplicativo ou site, digitalizando o cardápio, automatizando pedidos e melhorando a comunicação.
 
 ---
 
@@ -61,7 +76,7 @@ O banco de dados foi modelado com as seguintes entidades JPA:
 
 ---
 
-## 🏁 Como Rodar o Projeto (Recomendado: Podman Compose)
+## 🏁 Como Rodar o Projeto (Tutorial para Grupo)
 
 Este guia explica como configurar seu computador Windows do zero para rodar a API e o Banco de Dados juntos usando `podman-compose`.
 
