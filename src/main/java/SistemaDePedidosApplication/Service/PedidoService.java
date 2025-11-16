@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional; // MUITO IMPORTANTE
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,7 +54,11 @@ public class PedidoService {
         pedido.setCliente(cliente);
         pedido.setEnderecoEntrega(endereco);
         pedido.setStatus(StatusPedido.PENDENTE); // Status inicial
+        pedido.setFormaPagamento(dto.getFormaPagamento()); // Salva o pagamento
 
+        // APAGUE O 'return' QUE ESTAVA AQUI
+
+        // Agora este código será executado
         BigDecimal valorTotalDoPedido = BigDecimal.ZERO;
         List<ItemPedido> itensDoPedido = new ArrayList<>();
 
@@ -93,6 +98,7 @@ public class PedidoService {
         pedido.setValorTotal(valorTotalDoPedido);
 
         // 7. Salvar o Pedido (e os Itens, graças ao Cascade)
+        // ESTE É O ÚNICO 'return' QUE DEVE EXISTIR
         return pedidoRepository.save(pedido);
-    }
-}
+
+    }}

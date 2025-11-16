@@ -1,10 +1,12 @@
 package SistemaDePedidosApplication.Entity;
 
+import SistemaDePedidosApplication.Entity.Enum.FormaDePagamento;
 import SistemaDePedidosApplication.Entity.Enum.StatusPedido;
 import SistemaDePedidosApplication.Entity.Usuario.Cliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -82,4 +84,8 @@ public class Pedido {
         itens.remove(item);
         item.setPedido(null);
     }
+    @NotNull
+    @Enumerated(EnumType.STRING) // Salva o nome (ex: "PIX") no banco
+    @Column(name = "forma_pagamento")
+    private FormaDePagamento formaPagamento;
 }

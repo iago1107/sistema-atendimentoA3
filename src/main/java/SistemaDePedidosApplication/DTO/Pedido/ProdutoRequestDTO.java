@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import SistemaDePedidosApplication.Entity.Enum.FormaDePagamento;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -29,4 +31,7 @@ public class ProdutoRequestDTO {
     private Integer quantidadeEstoque;
 
     private String urlImagem;
+
+    @NotNull(message = "A forma de pagamento é obrigatória")
+    private FormaDePagamento formaPagamento;
 }

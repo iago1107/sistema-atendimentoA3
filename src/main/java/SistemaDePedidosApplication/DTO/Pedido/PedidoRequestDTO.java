@@ -1,5 +1,7 @@
 package SistemaDePedidosApplication.DTO.Pedido;
 
+
+import SistemaDePedidosApplication.Entity.Enum.FormaDePagamento;
 import lombok.Data;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -11,8 +13,11 @@ public class PedidoRequestDTO {
     private Long clienteId;
 
     @NotNull
-    private Long enderecoId; // ID do endereço de entrega
+    private Long enderecoId;
 
     @NotNull
     private List<ItemPedidoRequestDTO> itens;
+
+    @NotNull(message = "A forma de pagamento é obrigatória")
+    private FormaDePagamento formaPagamento;
 }
