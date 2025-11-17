@@ -17,9 +17,10 @@ Nossa análise para os Desenvolvimento começou pela entrevista no Local aonde i
 
 **Entrevista:**
 
-**Dependência de Atendimento Manual:** 
+* **Dependência de Atendimento Manual:** 
 "Atualmente,Os clientes fazem pedidos pessoalmente na lanchonete ou por telefone".
-**Atendimento Lento:** Um sistema digital foi sugerido:
+
+* **Atendimento Lento:** Um sistema digital foi sugerido:
  "o cliente poderia escolher os produtos sem pressa e sem 'agarrar' no atendimento, já que sempre há clientes que ficam indecisos".
 
 * **Falta de Marketing:** 
