@@ -15,10 +15,18 @@ Este projeto foi desenvolvido como atividade para o curso de **Programação de 
 O projeto nasceu com uma ideia de pegar uma empresa e identificar um tipo de problema que ela tem como um processo , sistema obsoleto , algum setor com má comunicação com cliente,...entre outros.
 Nossa análise para os Desenvolvimento começou pela entrevista no Local aonde identificou os principais desafios do atendimento atual da Padaria:
 
-**Dependência de Atendimento Manual:** Atualmente, "Os clientes fazem pedidos pessoalmente na lanchonete ou por telefone"[cite: 43].
-**Atendimento Lento (Indecisão):** Um sistema digital foi sugerido pois "o cliente poderia escolher os produtos sem pressa e sem 'agarrar' no atendimento, já que sempre há clientes que ficam indecisos"[cite: 43].
-**Falta de Marketing:** Os clientes "só descobrem as novidades e promoções indo ao estabelecimento", pois a padaria não utiliza placas ou redes sociais[cite: 43].
-* [cite_start]**Comunicação Interna Ineficiente:** A comunicação entre o balcão de atendimento e a produção é um desafio: "A padaria fica no Pátio e a produção no 4º Andar; a comunicação é feita pelo telefone"[cite: 53].
+**Entrevista:**
+
+**Dependência de Atendimento Manual:** 
+"Atualmente,Os clientes fazem pedidos pessoalmente na lanchonete ou por telefone".
+**Atendimento Lento:** Um sistema digital foi sugerido:
+ "o cliente poderia escolher os produtos sem pressa e sem 'agarrar' no atendimento, já que sempre há clientes que ficam indecisos".
+
+* **Falta de Marketing:** 
+"Os clientes só descobrem as novidades e promoções indo ao estabelecimento", pois a padaria não utiliza placas ou redes sociais.
+
+* ** A comunicação entre o balcão de atendimento e a produção é um desafio:** 
+"A padaria fica no Pátio e a produção no 4º Andar; a comunicação é feita pelo telefone".
 
 A **solução** proposta é esta API, que serve como base para um futuro aplicativo ou site, digitalizando o cardápio, automatizando pedidos e melhorando a comunicação.
 
