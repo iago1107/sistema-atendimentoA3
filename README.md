@@ -168,8 +168,9 @@ podman machine start
    git clone https://github.com/iago1107/sistema-atendimentoA3.git
 ```
 **4. Entre na Pasta do Projeto:**
+```bash
    cd sistema-atendimentoA3
-
+```
 **5. Inicie o podman-compose:**
 Este comando lê o "docker-compose.yml", constrói (build) a imagem da API, baixa o MariaDB e liga os dois containers.
 ```bash
