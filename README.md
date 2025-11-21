@@ -2,11 +2,21 @@
 
 Este projeto é um sistema de API REST para o gerenciamento de pedidos de uma padaria, construído com **Java 21** e **Spring Boot 3.x**.
 
-> 🚧 **Status do Projeto:** Concluído (Fase 1 - API Funcional) 🚧
+> 🚧 **Status do Projeto:** Em Fase de Teste (API Funcional) 🚧
 
 ## 🎓 Contexto Acadêmico
 
 Este projeto foi desenvolvido como atividade para o curso de **Programação de Soluções Computacionais e Modelagem de Software** da **Faculdade da Saúde e Ecologia Humana (FASEH)**, localizada em Vespasiano/MG.
+
+Membro da Equipe:
+ - Gustavo Moreira 
+ - Gabriel Peres 
+ - Isaut Van Der Faasen 
+ - Matheus Felipe 
+ - Estevão Gomes 
+ - Iago Gomes 
+ - Arthur Streich 
+ - Vitor Carlos 
 
 ---
 
