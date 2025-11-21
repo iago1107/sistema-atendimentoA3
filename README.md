@@ -161,3 +161,19 @@ Abra o **PowerShell (ou CMD) como Administrador**.
 **2. Ligue o "Motor" do Podman:**
 ```bash
 podman machine start
+
+**3. Baixe o Projeto do GitHub:**
+(Só precisa fazer isso uma vez. TROQUE PELA URL CORRETA DO SEU REPOSITÓRIO)
+   git clone https://github.com/iago1107/sistema-atendimentoA3.git
+
+4. Entre na Pasta do Projeto:
+   cd sistema-atendimentoA3
+
+5. Inicie o podman-compose:
+Este comando lê o "docker-compose.yml", constrói (build) a imagem da API, baixa o MariaDB e liga os dois containers.
+   podman-compose up
+
+6. Teste:
+Quando o terminal mostrar os logs dos containers "padaria-api" e "padaria-db", o sistema está no ar.
+Abra seu navegador e acesse o Swagger:
+   http://localhost:8081/docs
