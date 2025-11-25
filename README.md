@@ -9,14 +9,11 @@ Este projeto é um sistema de API REST para o gerenciamento de pedidos de uma pa
 Este projeto foi desenvolvido como atividade para o curso de **Programação de Soluções Computacionais e Modelagem de Software** da **Faculdade da Saúde e Ecologia Humana (FASEH)**, localizada em Vespasiano/MG.
 
 ## 🙎🏻‍♂️ Membros da Equipe:
- - Gustavo Moreira 
- - Gabriel Peres 
- - Isaut Van Der Faasen 
- - Matheus Felipe 
+ - Gustavo Moreira  
+ - Isaut Van Der Faasen  
  - Estevão Gomes 
  - Iago Gomes 
  - Arthur Streich 
- - Vitor Carlos 
 
 ---
 
