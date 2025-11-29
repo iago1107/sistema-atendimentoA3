@@ -34,7 +34,7 @@ INSERT INTO cliente (nome, sobrenome, cpf, email, senha, telefone, data_nascimen
 /* BLOCO 4: ENDEREÇOS (Tabela: endereco) */
 INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, cep, cliente_id) VALUES
                                                                                        ('Rua dos Aimorés', '1500', 'Centro', 'Belo Horizonte', 'MG', '30140-071', 1),
-                                                                                       ('Avenida Brasil', '800', 'Funcionários', 'Belo Horizonte', 'MG', '30140-001', 2);
+                                                                                       ('Avenida Brasil', '800', 'Savassi', 'Belo Horizonte', 'MG', '30140-001', 2);
 
 /* BLOCO 5: PEDIDOS DE EXEMPLO (Tabela: pedido) */
 INSERT INTO pedido (cliente_id, endereco_id, status, data_criacao, valor_total, forma_pagamento) VALUES
